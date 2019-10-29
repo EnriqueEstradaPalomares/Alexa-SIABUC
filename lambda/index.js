@@ -2,11 +2,16 @@
 // Please visit https://alexa.design/cookbook for additional examples on implementing slots, dialog management,
 // session persistence, api calls, and more.
 const {
-  getRequestType,
-  getIntentName,
-  getSlotValue,
-  getDialogState,
+    getRequestType,
+    getIntentName,
+    getSlotValue,
+    getDialogState,
 } = require('ask-sdk-core');
+
+//require('ListaLibrosIntent');
+
+const request = require('request');
+const util = require('util');
 
 const Alexa = require('ask-sdk-core');
 const LaunchRequestHandler = {
@@ -14,23 +19,50 @@ const LaunchRequestHandler = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'LaunchRequest';
     },
     handle(handlerInput) {
-        const speakOutput = 'Bienvenido a la app de SIABUC, dime, ¿Que es lo que estas buscando?';
+        const speakOutput = 'Bienvenido a la app de SIABUC, dime, ¿Qué es lo que estas buscando?';
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt(speakOutput)
             .getResponse();
     }
 };
+
+const pruebaRequestIntent = {
+    canHandle(handlerInput) {
+        return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
+            && Alexa.getIntentName(handlerInput.requestEnvelope) === 'pruebaRequestIntent';
+    },
+    async handle(handlerInput) {
+        const nameBook = getSlotValue(handlerInput.requestEnvelope, 'libroo');
+        const nameAutor = getSlotValue(handlerInput.requestEnvelope, 'autor');
+        var til;
+        let url = 'http://siabuc.ucol.mx:3000/api/v1.1/fichas/busqueda/' + nameBook + '&' + nameAutor;
+        const requestPromise = util.promisify(request);
+        const response = await requestPromise(url);
+        var consulta = JSON.parse(response.body);
+        const speakOutput = 'el libro ' + consulta[1].titulo + ' de ' + consulta[1].autor + ' está disponible, pregunta a algun bibliotecario por información de su ubicación';
+        return handlerInput.responseBuilder
+            .speak(speakOutput)
+            .reprompt('sí deseas realizar otra búsqueda, solo dímelo')
+            //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
+            .getResponse();
+    }
+};
+
+
+//Buscar libro
 const BuscarLibroIntent = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'BuscarLibroIntent';
     },
-    handle(handlerInput) {
+    async handle(handlerInput) {
         const nameBook = getSlotValue(handlerInput.requestEnvelope, 'book');
-        //const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        //sessionAttributes.
-        const speakOutput = 'entendi ' + nameBook;
+        let url = 'http://siabuc.ucol.mx:3000/api/v1.1/fichas/busqueda/' + nameBook;
+        const requestPromise = util.promisify(request);
+        const response = await requestPromise(url);
+        var consulta = JSON.parse(response.body);
+        const speakOutput = 'El libro ' + consulta[1].titulo + ' de ' + consulta[1].autor + ' no se como contestarte aun';
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt('si deseas realizar otra busqueda, solo dimelo')
@@ -53,7 +85,7 @@ const MostPopularIntent = {
             .reprompt('si deseas realizar otra busqueda, solo dimelo')
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
-            
+
     }
 };
 
@@ -79,7 +111,7 @@ const CancelAndStopIntentHandler = {
                 || Alexa.getIntentName(handlerInput.requestEnvelope) === 'AMAZON.StopIntent');
     },
     handle(handlerInput) {
-        const speakOutput = 'Hasta la Proximaaaaaaaaa';
+        const speakOutput = 'Adios, que tengas un excelente día';
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .getResponse();
@@ -91,12 +123,13 @@ const ClasificacionLibroIntent = {  //revisar
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ClasificacionLibroIntent';
     },
-    handle(handlerInput) {
-        
-        const clasif = getSlotValue(handlerInput.requestEnvelope, 'libro');
-        //const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        //sessionAttributes.
-        const speakOutput = 'entendi ' + clasif + ' ClasificacionLibroIntent';
+    async handle(handlerInput) {
+        const nameBook = getSlotValue(handlerInput.requestEnvelope, 'libro');
+        let url = 'http://siabuc.ucol.mx:3000/api/v1.1/fichas/busqueda/' + nameBook;
+        const requestPromise = util.promisify(request);
+        const response = await requestPromise(url);
+        var consulta = JSON.parse(response.body);
+        const speakOutput = 'La clasificiacion del libro solicitado es ' + consulta[0].clasificacion;
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt('si deseas realizar otra busqueda, solo dimelo')
@@ -110,11 +143,14 @@ const LibroDeTemaIntent = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'LibroDeTemaIntent';
     },
-    handle(handlerInput) {
-        const nameBook = getSlotValue(handlerInput.requestEnvelope, 'tema');
-        //const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        //sessionAttributes.
-        const speakOutput = 'entendi ' + nameBook + ' LibroDeTemaIntent';
+   async handle(handlerInput) {
+        const tema = getSlotValue(handlerInput.requestEnvelope, 'tema');
+        let url = 'http://siabuc.ucol.mx:3000/api/v1.1/fichas/busqueda/' + tema;
+        const requestPromise = util.promisify(request);
+        const response = await requestPromise(url);
+        var consulta = JSON.parse(response.body);
+        var x = Math.floor((Math.random() * 10) + 1);
+        const speakOutput = 'Te puede interesar el libro ' + consulta[x].titulo;
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt('si deseas realizar otra busqueda, solo dimelo')
@@ -128,18 +164,21 @@ const ClasificacionPorTemaIntent = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ClasificacionPorTemaIntent';
     },
-    handle(handlerInput) {
-        const nameBook = getSlotValue(handlerInput.requestEnvelope, 'tema');
-        //const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        //sessionAttributes.
-        const speakOutput = 'entendi ' + nameBook + 'ClasificacionPorTemaIntent';
+    async handle(handlerInput) {
+        const tema = getSlotValue(handlerInput.requestEnvelope, 'tema');
+        let url = 'http://siabuc.ucol.mx:3000/api/v1.1/fichas/busqueda/' + tema;
+        const requestPromise = util.promisify(request);
+        const response = await requestPromise(url);
+        var consulta = JSON.parse(response.body);
+        var x = Math.floor((Math.random() * 10) + 1);
+        const speakOutput = 'La clasificación del libro '+ consulta[x].titulo + ' es ' + consulta[x].clasificacion;
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt('si deseas realizar otra busqueda, solo dimelo')
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
-    
+
 };
 
 const ListaLibrosIntent = {
@@ -147,18 +186,24 @@ const ListaLibrosIntent = {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'IntentRequest'
             && Alexa.getIntentName(handlerInput.requestEnvelope) === 'ListaLibrosIntent';
     },
-    handle(handlerInput) {
-        const nameBook = getSlotValue(handlerInput.requestEnvelope, 'book');
-        //const sessionAttributes = handlerInput.attributesManager.getSessionAttributes();
-        //sessionAttributes.
-        const speakOutput = 'entendi ' + nameBook + ' ListaLibrosIntent';
+    async handle(handlerInput) {
+        const tema = getSlotValue(handlerInput.requestEnvelope, 'tema');
+        let url = 'http://siabuc.ucol.mx:3000/api/v1.1/fichas/busqueda/' + tema;
+        const requestPromise = util.promisify(request);
+        const response = await requestPromise(url);
+        var consulta = JSON.parse(response.body);
+        const long = Object.keys(consulta).length;
+        var speakOutput = ' ';
+        for(var i = 0; i < 10; i++ ){
+            speakOutput += 'La clasificación del libro '+ consulta[i].titulo + ' es ' + consulta[i].clasificacion + '. ';
+        }
         return handlerInput.responseBuilder
             .speak(speakOutput)
             .reprompt('si deseas realizar otra busqueda, solo dimelo')
             //.reprompt('add a reprompt if you want to keep the session open for the user to respond')
             .getResponse();
     }
-};
+}; 
 const SessionEndedRequestHandler = {
     canHandle(handlerInput) {
         return Alexa.getRequestType(handlerInput.requestEnvelope) === 'SessionEndedRequest';
@@ -213,6 +258,7 @@ exports.handler = Alexa.SkillBuilders.custom()
     .addRequestHandlers(
         LaunchRequestHandler,
         MostPopularIntent,
+        pruebaRequestIntent,
         LibroDeTemaIntent,
         ListaLibrosIntent,
         ClasificacionLibroIntent,
