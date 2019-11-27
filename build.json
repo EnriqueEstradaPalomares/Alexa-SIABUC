@@ -1,0 +1,242 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "siabuc",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "detente",
+                        "alto",
+                        "cancela"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "como te uso",
+                        "ayudame"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "cierra la skill",
+                        "bye",
+                        "adios"
+                    ]
+                },
+                {
+                    "name": "MostPopularIntent",
+                    "slots": [],
+                    "samples": [
+                        "cuales son los temas mas buscados",
+                        "cuales son los mas bucados"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ClasificacionLibroIntent",
+                    "slots": [
+                        {
+                            "name": "libro",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "qué clasificación es el libro {libro}",
+                        "me puedes brindar la clasificación del libro {libro}",
+                        "me puedes pasar la clasificación del libro {libro}",
+                        "me puedes dar la clasificación del libro {libro}",
+                        "dame la clasificación del libro {libro}",
+                        "me urge la clasificación del libro {libro}",
+                        "pásame la clasificación del libro {libro}"
+                    ]
+                },
+                {
+                    "name": "LibroDeTemaIntent",
+                    "slots": [
+                        {
+                            "name": "tema",
+                            "type": "AMAZON.Genre"
+                        }
+                    ],
+                    "samples": [
+                        "estoy buscando un libro que tenga algo sobre {tema}",
+                        "estoy buscando un libro que hable sobre {tema}",
+                        "estoy buscando un libro que tenga algo de {tema}",
+                        "estoy buscando un libro que hable de {tema}",
+                        "estoy buscando un libro sobre {tema}",
+                        "tienes un libro que tenga algo acerca de {tema}",
+                        "tienes un libro acerca de {tema}",
+                        "tienes un libro que tenga algo sobre {tema}",
+                        "tienes un libro que hable de {tema}",
+                        "tienes un libro sobre {tema}",
+                        "tienes el libro que habla de {tema}",
+                        "tienes el libro sobre {tema}",
+                        "ayúdame a encontrar un libro que hable acerca de {tema}",
+                        "ayúdame a encontrar un libro que hable sobre {tema}",
+                        "ayúdame a encontrar un libro acerca de {tema}",
+                        "ayúdame a encontrar un libro que tenga algo sobre {tema}",
+                        "ayúdame a encontrar un libro que hable de {tema}",
+                        "ayúdame a encontrar un libro sobre {tema}",
+                        "me urge un libro que contenga el tema de {tema}",
+                        "me urge un libro que contenga algo sobre {tema}",
+                        "necesito un libro que tenga algo sobre {tema}",
+                        "necesito un libro que hable sobre {tema}",
+                        "necesito un libro que tenga el tema de {tema}",
+                        "necesito un libro sobre {tema}",
+                        "necesito un libro que hable de {tema}",
+                        "Necesito un libro de {tema}",
+                        "me puedes apoyar con un libro acerca de {tema}",
+                        "me puedes apoyar con un libro que tenga algo sobre {tema}",
+                        "me puedes apoyar con un libro que tenga el tema de {tema}",
+                        "me puedes apoyar con un libro que hable de {tema}",
+                        "me puedes apoyar con un libro sobre {tema}",
+                        "me puedes apoyar con un libro de {tema}",
+                        "me puedes informar si hay algún libro de {tema}",
+                        "me puedes informar si hay algún libro referente a {tema}",
+                        "me puedes informar si hay algún libro acerca de {tema}",
+                        "me puedes informar si hay algún libro sobre {tema}",
+                        "me puedes informar si hay algún libro que tenga algo sobre {tema}",
+                        "me puedes informar si hay algún libro que hable de {tema} ",
+                        "me urge un libro que tenga algo de {tema}",
+                        "me urge un libro sobre {tema}",
+                        "me urge un libro que tenga el tema de {tema}",
+                        "me urge un libro que hable sobre {tema}",
+                        "quiero un libro hable de {tema}",
+                        "quiero un libro que hable acerca de {tema}",
+                        "quiero un libro acerca de {tema}",
+                        "quiero un libro que hable de {tema}",
+                        "quiero un libro sobre {tema}",
+                        "quiero un libro que tenga el tema de {tema}",
+                        "quiero un libro que tenga algo de {tema}",
+                        "quiero un libro que hable sobre {tema}",
+                        "quiero un libro de {tema}"
+                    ]
+                },
+                {
+                    "name": "ClasificacionPorTemaIntent",
+                    "slots": [
+                        {
+                            "name": "tema",
+                            "type": "AMAZON.Genre"
+                        }
+                    ],
+                    "samples": [
+                        "me puedes brindar la clasificación de un libro acerca de {tema}",
+                        "me puedes brindar la clasificación de un libro que tenga el tema de {tema}",
+                        "me puedes brindar la clasificación de un libro que hable de {tema}",
+                        "me puedes brindar la clasificación de un libro que hable sobre {tema}",
+                        "me puedes brindar la clasificación de un libro de {tema}",
+                        "me puedes pasar la clasificación de un libro acerca de {tema}",
+                        "me puedes pasar la clasificación de un libro que tenga el tema de {tema}",
+                        "me puedes pasar la clasificación de un libro que hable de {tema}",
+                        "me puedes pasar la clasificación de un libro que hable sobre {tema}",
+                        "me puedes pasar la clasificación de un libro de {tema}",
+                        "me puedes dar la clasificación de libros de {tema}",
+                        "me puedes dar la clasificación de un libro que hable de {tema}",
+                        "me puedes dar la clasificación de un libro que hable sobre {tema}",
+                        "me puedes dar la clasificación de un libro que hablen de {tema}",
+                        "me puedes dar la clasificación de un libro que tenga algo de {tema}",
+                        "me puedes dar la clasificación de un libro que tenga el tema de {tema}",
+                        "me puedes dar la clasificación de un libro sobre {tema}",
+                        "me puedes dar la clasificación de un libro acerca de {tema}",
+                        "me puedes dar la clasificación de un libro de {tema}",
+                        "dame la clasificación de un libro acerca de {tema}",
+                        "dame la clasificación de un libro que tenga algo sobre {tema}",
+                        "dame la clasificación de un libro sobre {tema}",
+                        "dame la clasificación de un libro que hable sobre {tema}",
+                        "pásame la clasificación de un libro que diga algo sobre {tema}",
+                        "pásame la clasificación de un libro que tenga algo de {tema}",
+                        "pásame la clasificación de un libro que tenga algo sobre {tema}",
+                        "pásame la clasificación de un libro que hable de {tema}",
+                        "pásame la clasificación de un libro que hable sobre {tema}",
+                        "pásame la clasificación de un libro sobre {tema}"
+                    ]
+                },
+                {
+                    "name": "ListaLibrosIntent",
+                    "slots": [
+                        {
+                            "name": "book",
+                            "type": "AMAZON.SearchQuery"
+                        }
+                    ],
+                    "samples": [
+                        "me puedes dar la clasificación de los libros {book}",
+                        "me puedes dar la clasificación de libros sobre {book}",
+                        "me puedes dar la clasificación de libros que tengan los temas de {book}"
+                    ]
+                },
+                {
+                    "name": "BuscarLibroIntent",
+                    "slots": [
+                        {
+                            "name": "libroo",
+                            "type": "AMAZON.Book",
+                            "samples": [
+                                "{libroo}"
+                            ]
+                        },
+                        {
+                            "name": "autor",
+                            "type": "AMAZON.Book"
+                        }
+                    ],
+                    "samples": [
+                        "estoy buscando el libro {libroo}",
+                        "me urge el libro de {libroo}",
+                        "me urge el libro {libroo}",
+                        "ayúdame a encontrar el libro {libroo}",
+                        "tienes el libro {libroo}",
+                        "tienes el libro de {libroo}"
+                    ]
+                }
+            ],
+            "types": []
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "BuscarLibroIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "libroo",
+                            "type": "AMAZON.Book",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.624342247314.1262615064555"
+                            }
+                        },
+                        {
+                            "name": "autor",
+                            "type": "AMAZON.Book",
+                            "confirmationRequired": false,
+                            "elicitationRequired": false,
+                            "prompts": {}
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.624342247314.1262615064555",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Discúlpame, no puedo ayudarte si no me das el nombre del libro, así que dime ¿Cuál es el título del libro?"
+                    }
+                ]
+            }
+        ]
+    }
+}
